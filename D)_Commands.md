@@ -237,3 +237,326 @@ GRANT SELECT ON employees TO user_name;
 ```
 ✅ This gives read-only access because only SELECT permission is granted.
 
+---
+
+### 6. What is the difference between ROLLBACK, COMMIT, and SAVEPOINT in SQL?
+#### Answer:
+| Command     | Purpose                                            |
+| ----------- | -------------------------------------------------- |
+| `COMMIT`    | Saves all changes made in the current transaction  |
+| `ROLLBACK`  | Reverts all changes since last COMMIT              |
+| `SAVEPOINT` | Creates a point within transaction to roll back to |
+> 🔸 Use Case: Used in banking to prevent incorrect balance updates. 
+
+---
+
+### 7. Why is SELECT considered part of DQL and not DML?
+#### Answer:
+- SELECT only reads data; it doesn't modify anything.
+- DML involves modifying data (INSERT, UPDATE, DELETE), hence SELECT falls under DQL.
+
+---
+
+### 8. Can we roll back a TRUNCATE operation? Why or why not?
+#### Answer:
+❌ No, because `TRUNCATE` is a DDL command and auto-commits changes — making rollback impossible.
+
+---
+
+### 9. Give real-life examples where DCL commands are used.
+#### Answer:
+In a banking system:
+👉 Only the manager should be able to `UPDATE` account balances.
+```sql
+GRANT UPDATE ON accounts TO manager;
+REVOKE UPDATE ON accounts FROM intern;
+```
+
+---
+
+### 10. Why are TCL commands important in a banking application?
+#### Answer:
+
+Ensures data consistency and atomicity in critical operations.
+
+Example: If money is debited from one account but not credited to another, we must ROLLBACK.
+```sql
+BEGIN TRANSACTION;
+-- debit account A
+-- credit account B
+COMMIT;
+```
+> If anything fails → use ROLLBACK to revert both.
+
+---
+
+
+# SQL Commands – Interview Questions & Answers
+
+This file contains theory-based, interview-oriented questions and answers for the following SQL command categories:
+
+- DDL (Data Definition Language)
+- DML (Data Manipulation Language)
+- DQL (Data Query Language)
+- DCL (Data Control Language)
+- TCL (Transaction Control Language)
+- Advanced/Real-Time Based
+
+---
+
+## 🔸 DDL (Data Definition Language)
+
+### Q1. What is the difference between DROP, TRUNCATE, and DELETE?
+- **DROP**: Completely removes the table structure and data from the database. Cannot be rolled back.
+- **TRUNCATE**: Deletes all records but keeps the table structure. It’s faster than DELETE and cannot be rolled back (DDL).
+- **DELETE**: Deletes rows based on a condition and can be rolled back. Slower, used for selective deletion.
+
+### Q2. Can we use ALTER to rename a column in SQL?
+- Yes, using `ALTER TABLE table_name RENAME COLUMN old_name TO new_name;` (Supported in most RDBMS).
+
+### Q3. What happens internally when we run a CREATE TABLE command?
+- Allocates metadata, stores table schema in system catalog, and reserves space for data.
+
+### Q4. Does TRUNCATE reset identity columns (auto-increment)?
+- Yes, in most databases like SQL Server. In MySQL, you can reset explicitly using `ALTER`.
+
+### Q5. How is RENAME different from ALTER?
+- **RENAME** changes table or column name. **ALTER** modifies structure (adds/removes columns, changes datatype).
+
+---
+
+## 🔸 DML (Data Manipulation Language)
+
+### Q1. What is the difference between UPDATE and MERGE?
+- **UPDATE**: Used to modify existing records.
+- **MERGE**: Combines INSERT, UPDATE, DELETE in a single command for upserts.
+
+### Q2. Can we insert multiple rows using a single INSERT statement?
+- Yes. Example: `INSERT INTO table (col1, col2) VALUES (1, 'A'), (2, 'B');`
+
+### Q3. What happens if we don’t specify a WHERE clause in an UPDATE or DELETE?
+- All rows will be updated or deleted. Always use WHERE cautiously.
+
+### Q4. How can you copy data from one table to another using DML?
+- `INSERT INTO new_table SELECT * FROM old_table;`
+
+### Q5. What is the difference between INSERT INTO SELECT and SELECT INTO?
+- `INSERT INTO SELECT`: Requires pre-existing table.
+- `SELECT INTO`: Creates new table with selected data.
+
+---
+
+## 🔸 DQL (Data Query Language)
+
+### Q1. How does SELECT DISTINCT work?
+- Removes duplicate rows based on selected columns.
+
+### Q2. What is the use of GROUP BY and how is it different from ORDER BY?
+- **GROUP BY**: Aggregates rows (e.g., COUNT, SUM).
+- **ORDER BY**: Sorts the result set. GROUP BY groups, ORDER BY sorts.
+
+### Q3. Explain use cases for HAVING clause.
+- Used with GROUP BY to filter aggregated results. E.g., `HAVING COUNT(*) > 1`.
+
+### Q4. Can we use WHERE with aggregate functions? Why not?
+- No, WHERE filters before aggregation. Use HAVING to filter aggregated results.
+
+### Q5. What is the purpose of aliases in SELECT statements?
+- Makes result set easier to read or rename columns temporarily. Example: `SELECT col1 AS name`.
+
+---
+
+## 🔸 DCL (Data Control Language)
+
+### Q1. Can we use GRANT to allow a user to create new tables?
+- No. Object-level privileges don’t allow CREATE TABLE. Use role/DB-level permissions.
+
+### Q2. What is the difference between WITH GRANT OPTION and a simple GRANT?
+- **WITH GRANT OPTION**: Allows the user to grant privileges to others.
+- Simple GRANT: Just allows usage of the object.
+
+### Q3. What does CASCADE do in REVOKE?
+- Removes privileges from users who were granted access by the revoked user.
+
+### Q4. How is access control implemented in multi-user environments?
+- Using roles, privileges, schemas, and user-specific GRANT/REVOKE.
+
+### Q5. Can you restrict SELECT on some columns only?
+- Yes, by creating views or granting SELECT on specific columns.
+
+---
+
+## 🔸 TCL (Transaction Control Language)
+
+### Q1. What is a transaction? What are ACID properties?
+- A transaction is a group of operations executed as a unit.  
+- **ACID**: Atomicity, Consistency, Isolation, Durability.
+
+### Q2. What is the purpose of SAVEPOINT? Can we have multiple savepoints?
+- YES. SAVEPOINT creates checkpoints inside a transaction to rollback partially.
+
+### Q3. What happens if you forget to COMMIT after BEGIN TRANSACTION?
+- Changes remain uncommitted and will be lost on session end or rollback.
+
+### Q4. Can we roll back a part of a transaction?
+- Yes, using `ROLLBACK TO SAVEPOINT`.
+
+### Q5. What is the difference between ROLLBACK TO SAVEPOINT and ROLLBACK?
+- `ROLLBACK`: Undoes all changes in the transaction.
+- `ROLLBACK TO SAVEPOINT`: Undoes changes after the savepoint.
+
+---
+
+## 🔸 Advanced/Real-Time Based
+
+### Q1. You are inserting multiple rows in a transaction and one fails. How would you handle it?
+- Use `TRY-CATCH` or rollback the transaction and retry the failed row.
+
+### Q2. What is the impact of using COMMIT inside a loop while inserting records?
+- Each record is committed separately, reducing rollback capability but improving performance.
+
+### Q3. Explain a scenario where TRUNCATE fails.
+- If table has foreign key constraints or is referenced in an active transaction.
+
+### Q4. Can DDL commands be rolled back if executed within a transaction block?
+- In most databases, **NO**. DDL is auto-commit. In Oracle, some support exists with `EXECUTE IMMEDIATE`.
+
+### Q5. What are implicit vs. explicit transactions in SQL?
+- **Implicit**: Auto-commit after each statement.
+- **Explicit**: User manually defines BEGIN, COMMIT, ROLLBACK.
+
+---
+
+
+# 📘 SQL Commands - Query-Based Practice (Hands-On)
+
+## 🔹 DDL (Data Definition Language)
+
+### 1. Create a new table named `employees`.
+```sql
+CREATE TABLE employees (
+    emp_id INT PRIMARY KEY,
+    emp_name VARCHAR(100),
+    department VARCHAR(50),
+    salary DECIMAL(10, 2),
+    hire_date DATE
+);
+```
+
+### 2. Add a new column `email` to `employees`.
+```sql
+ALTER TABLE employees ADD email VARCHAR(100);
+```
+
+### 3. Rename column `emp_name` to `full_name`.
+```sql
+ALTER TABLE employees RENAME COLUMN emp_name TO full_name;
+```
+
+### 4. Delete the entire `employees` table.
+```sql
+DROP TABLE employees;
+```
+
+### 5. Remove all rows from the `employees` table but keep structure.
+```sql
+TRUNCATE TABLE employees;
+```
+
+## 🔹 DML (Data Manipulation Language)
+
+### 1. Insert a new record into `employees`.
+```sql
+INSERT INTO employees (emp_id, full_name, department, salary, hire_date)
+VALUES (1, 'John Doe', 'IT', 50000.00, '2023-01-01');
+```
+
+### 2. Insert multiple rows.
+```sql
+INSERT INTO employees (emp_id, full_name, department, salary, hire_date) VALUES
+(2, 'Jane Smith', 'HR', 60000.00, '2023-03-10'),
+(3, 'Raj Kumar', 'Sales', 45000.00, '2022-07-15');
+```
+
+### 3. Update salary of employees in IT department.
+```sql
+UPDATE employees SET salary = salary + 5000 WHERE department = 'IT';
+```
+
+### 4. Delete employee with ID = 3.
+```sql
+DELETE FROM employees WHERE emp_id = 3;
+```
+
+### 5. Copy data to backup table.
+```sql
+INSERT INTO employees_backup SELECT * FROM employees;
+```
+
+## 🔹 DQL (Data Query Language)
+
+### 1. Retrieve all employees from HR.
+```sql
+SELECT * FROM employees WHERE department = 'HR';
+```
+
+### 2. Retrieve distinct departments.
+```sql
+SELECT DISTINCT department FROM employees;
+```
+
+### 3. Group by department and find average salary.
+```sql
+SELECT department, AVG(salary) AS avg_salary FROM employees GROUP BY department;
+```
+
+### 4. Use HAVING to filter departments with avg salary > 50000.
+```sql
+SELECT department, AVG(salary) AS avg_salary
+FROM employees
+GROUP BY department
+HAVING AVG(salary) > 50000;
+```
+
+### 5. Use alias for better readability.
+```sql
+SELECT full_name AS Name, salary AS Salary FROM employees;
+```
+
+## 🔹 DCL (Data Control Language)
+
+### 1. Grant SELECT and UPDATE on employees to user `john`.
+```sql
+GRANT SELECT, UPDATE ON employees TO john;
+```
+
+### 2. Revoke UPDATE permission from user `john`.
+```sql
+REVOKE UPDATE ON employees FROM john;
+```
+
+## 🔹 TCL (Transaction Control Language)
+
+### 1. Transaction with COMMIT.
+```sql
+BEGIN TRANSACTION;
+UPDATE employees SET salary = salary + 2000 WHERE emp_id = 1;
+COMMIT;
+```
+
+### 2. Transaction with ROLLBACK.
+```sql
+BEGIN TRANSACTION;
+UPDATE employees SET department = 'Finance' WHERE emp_id = 2;
+ROLLBACK;
+```
+
+### 3. Using SAVEPOINT and ROLLBACK TO.
+```sql
+BEGIN TRANSACTION;
+UPDATE employees SET department = 'Finance' WHERE emp_id = 2;
+SAVEPOINT sp1;
+UPDATE employees SET department = 'Legal' WHERE emp_id = 1;
+ROLLBACK TO sp1;
+COMMIT;
+```
