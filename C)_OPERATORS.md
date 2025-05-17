@@ -1,8 +1,6 @@
 
 # 🧮 SQL Operators – Explained with Easy Examples
 
-📅 **Last Updated:** 07 April, 2025
-
 SQL Operators allow us to **manipulate and retrieve data** effectively in databases. These operators help in performing **mathematical, logical, comparison**, and other operations, making them crucial for writing efficient queries.
 
 ---
