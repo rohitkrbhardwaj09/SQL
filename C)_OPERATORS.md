@@ -42,7 +42,8 @@ SQL Operators allow us to **manipulate and retrieve data** effectively in databa
 SELECT emp_salary, emp_salary * 1.05 AS "Revised Salary" FROM employee;
 ```
 
-🖼️ ![Arithmetic Example](https://dummyimage.com/600x200/000/fff&text=Revised+Salary+Calculation)
+🖼️ **Arithmatic Example Output** <br/>
+![image](https://github.com/user-attachments/assets/c8228e83-2b7a-43aa-96e2-8fc699b640f7)
 
 ---
 
@@ -60,10 +61,11 @@ SELECT emp_salary, emp_salary * 1.05 AS "Revised Salary" FROM employee;
 📌 **Example:**
 
 ```sql
-SELECT * FROM MATHS WHERE MARKS = 50;
+SELECT * FROM MATHS WHERE MARKS >= 50;
 ```
 
-🖼️ ![Comparison Example](https://dummyimage.com/600x200/222/fff&text=Marks+=+50)
+🖼️ Comparison Example Output <br/>
+![image](https://github.com/user-attachments/assets/9ce07db4-72b4-4f73-8b06-ba79a809f3bb)
 
 ---
 
@@ -81,7 +83,9 @@ SELECT * FROM MATHS WHERE MARKS = 50;
 SELECT * FROM employee WHERE emp_city = 'Allahabad' AND emp_country = 'India';
 ```
 
-🖼️ ![Logical Example](https://dummyimage.com/600x200/333/fff&text=City+AND+Country+Filter)
+🖼️ Logical Example Output <br/>
+![image](https://github.com/user-attachments/assets/0e95c09a-d851-4010-b77b-50d22c85673d)
+
 
 ---
 
@@ -133,7 +137,9 @@ These perform an operation **and assignment** at the same time.
 SELECT * FROM employee WHERE emp_id BETWEEN 101 AND 104;
 ```
 
-🖼️ ![Between Example](https://dummyimage.com/600x200/666/fff&text=ID+Between+101+and+104)
+🖼️ Between Example Output <br/>
+![image](https://github.com/user-attachments/assets/89b509f5-a8e0-44f4-b42f-9c2cb38e9970)
+
 
 ---
 
