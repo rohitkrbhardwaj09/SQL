@@ -62,6 +62,7 @@ select * from sales;
 ```
 
 **Output**
+![image](https://github.com/user-attachments/assets/6029f93c-8ec1-48b8-b398-272219da1085)
 
 
 ---
@@ -70,4 +71,41 @@ select * from sales;
 ```sql
 select product_name, unit_price from products;
 ```
+**Output:**
+![image](https://github.com/user-attachments/assets/7ad8d1c0-4ea6-4ad2-944e-4b66422c993d)
 
+---
+
+## Retrive the sale_id and sale_date from the Sales table
+```sql
+select sale_id, sale_date from sales;
+```
+**Output:**
+![image](https://github.com/user-attachments/assets/d6a8600c-355c-448d-8f2c-bb54801b7c3f)
+
+---
+
+## Filter the Sales table to show only sales with a total_price greater than $100
+```sql
+select * from sales where total_price > 100.00;
+```
+**Output:**
+![image](https://github.com/user-attachments/assets/e50bfb11-27c8-49f1-8dd5-f9ac3023bc32)
+
+---
+
+## Filter the Products table to show only products in the 'Electronics' category
+```sql
+select * from products where category = 'Electronics';
+```
+**Output:**
+![image](https://github.com/user-attachments/assets/9e49f879-ecb3-4e46-99fa-2dc8049c6f06)
+
+---
+
+## Retrive the sale_id and total_price from the Sales table for sales made on January 2, 2024.
+```sql
+select sale_id, total_price from sales where sale_date = '2024-01-03';
+```
+**Output:**
+![image](https://github.com/user-attachments/assets/d0d2ea99-06d0-445c-a1a5-01a83dc30054)
