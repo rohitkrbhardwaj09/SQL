@@ -54,4 +54,20 @@ The Sales table records information about product sales, including the quantity 
 # SQL PRACTICE EXERCISE FOR BEGINNERS
 ---
 
-## 
+## Retrive all columns fro the sales table
+
+**Query:**
+```sql
+select * from sales;
+```
+
+**Output**
+
+
+---
+
+## Retrive the `product_name` and `unit_price` from the products table
+```sql
+select product_name, unit_price from products;
+```
+
