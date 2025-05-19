@@ -1,4 +1,4 @@
-![image](https://github.com/user-attachments/assets/97c9d82c-ee8b-46a5-a957-61128e6957bc)# SQL Practice
+# SQL Practice
 
 ### Products Table 
 The Products table contains details about products, including their names, categories, and unit prices. It provides reference data for linking product information to sales transactions.
@@ -51,7 +51,9 @@ The Sales table records information about product sales, including the quantity 
 ![image](https://github.com/user-attachments/assets/dead8fea-184e-4198-a641-785bec13e998)
 
 ---
+
 # SQL PRACTICE EXERCISE FOR BEGINNERS
+
 ---
 
 ## 1) Retrive all columns fro the sales table
